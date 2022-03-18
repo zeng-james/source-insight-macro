@@ -12,6 +12,10 @@
                    the programming efficiently.
 *  History:
 * 
+*       2.  Date         : 2022/3/17
+*           Author       : James Zeng
+*           Modification : Added event handler DocumentSave
+* 
 *       1.  Date         : 2022/3/17
 *           Author       : James Zeng
 *           Modification : Created file
@@ -6584,7 +6588,7 @@ macro FileHeaderCreate()
 
 /*****************************************************************************
  函 数 名  : ShowHelp
- 功能描述  : 列出本Quicker所支持的快捷命令
+ 功能描述  : 列出本efficient.em所支持的快捷命令
  输出参数  : 无
  返 回 值  : 
  调用函数  : 
@@ -6606,7 +6610,7 @@ macro ShowHelp(hbuf, ln)
     
     InsBufLine(hbuf, ln + i, "/*==============================================*")
     i = i+1
-    InsBufLine(hbuf, ln + i, " *====== List Quicker supports commands ========*")
+    InsBufLine(hbuf, ln + i, " *====== List the supported commands ========*")
     i = i+1
     InsBufLine(hbuf, ln + i, " *----------------------------------------------*")
     i = i+1
@@ -6632,7 +6636,7 @@ macro ShowHelp(hbuf, ln)
     i = i+1
     InsBufLine(hbuf, ln + i, " *  ifs            auto insert if/else if/else condition statements template")
     i = i+1
-    InsBufLine(hbuf, ln + i, " *  else/ei        auto insert else statements template")       
+    InsBufLine(hbuf, ln + i, " *  else/el        auto insert else statements template")       
     i = i+1
     InsBufLine(hbuf, ln + i, " *")
     i = i+1
@@ -6708,7 +6712,7 @@ macro ShowHelp(hbuf, ln)
 
     InsBufLine(hbuf, ln + i, " *  key            list Source Insight default shortcut keys")
     i = i+1
-    InsBufLine(hbuf, ln + i, " *  cmd/help       list Quicker supports commands just this showed")
+    InsBufLine(hbuf, ln + i, " *  cmd/help       list the supported commands just this showed")
     i = i+1
     InsBufLine(hbuf, ln + i, " *")
     i = i+1
@@ -6717,7 +6721,7 @@ macro ShowHelp(hbuf, ln)
     i = i+1
     InsBufLine(hbuf, ln + i, " *  #ifd/#ifdef    auto insert #ifdef statements template")       
     i = i+1
-    InsBufLine(hbuf, ln + i, " *  #ifn/#ifndef   auto insert #inndef statements template")       
+    InsBufLine(hbuf, ln + i, " *  #ifn/#ifndef   auto insert #ifndef statements template")       
     i = i+1
     InsBufLine(hbuf, ln + i, " *")
     i = i+1
@@ -6732,7 +6736,7 @@ macro ShowHelp(hbuf, ln)
     
     InsBufLine(hbuf, ln + i, " *----------------------------------------------*")
     i = i+1
-    InsBufLine(hbuf, ln + i, " *======= End Quicker supports commands ========*")    
+    InsBufLine(hbuf, ln + i, " *======= End the supported commands ========*")    
     i = i+1
     InsBufLine(hbuf, ln + i, " *==============================================*/")
     
@@ -7092,4 +7096,57 @@ macro ShowShortKey(hbuf, ln)
 }
 
 
+/*==============================================*
+ *                                              *
+ *      Macro Event Handlers implementations    *
+ *                                              *
+ *----------------------------------------------*/
+ 
+ // This is called just before the document is saved
+event DocumentSave(sFile)
+{
+	var hbuf
+	var pattern
+	var sel
+	var has_strcpy, has_strcat, has_sprintf, has_system
 
+	//SearchInBuf (hbuf, pattern, lnStart, ichStart, fMatchCase, fRegExp, fWholeWordsOnly)
+	hbuf = GetBufHandle(sFile)
+	if (hbuf == hNil)
+		stop
+
+	has_strcpy = 0
+	pattern = "strcpy"
+	sel = SearchInBuf(hbuf, pattern, 0, 0, 0, 0, 0)
+	//Msg("sel:@sel@")
+	if (sel != Nil)
+		has_strcpy = 1
+
+	has_strcat = 0
+	pattern = "strcat"
+	sel = SearchInBuf(hbuf, pattern, 0, 0, 0, 0, 0)
+	//Msg("sel:@sel@")
+	if (sel != Nil)
+		has_strcat = 1
+
+	has_sprintf = 0
+	pattern = "sprintf"
+	sel = SearchInBuf(hbuf, pattern, 0, 0, 0, 0, 0)
+	//Msg("sel:@sel@")
+	if (sel != Nil)
+		has_sprintf = 1
+
+	has_system = 0
+	pattern = "system.*;$"
+	sel = SearchInBuf(hbuf, pattern, 0, 0, 0, 1, 0)
+	//Msg("sel:@sel@")
+	if (sel != Nil)
+	{
+		has_system = 1
+		//Msg("Warning: system functions exist!")
+	}
+
+	if (has_strcpy == 1  || has_strcat == 1 || has_sprintf == 1 || has_system == 1)
+		Msg("Warning: [strcpy|strcat|sprintf|system] functions exist! Please don't use them anymore!")
+	
+}
