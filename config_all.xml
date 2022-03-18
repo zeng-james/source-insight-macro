@@ -173,7 +173,7 @@
 		/>
 	<DisplayColors>
 		<Item Name="DefaultText" Color="#000000" />
-		<Item Name="WindowBackground" Color="#ffffff" />
+		<Item Name="WindowBackground" Color="#cce8cf" />
 		<Item Name="SelectionBar" Color="#e6e6e6" />
 		<Item Name="PrintedDefaultText" Color="#000000" />
 		<Item Name="PrintedWindowBackground" Color="#ffffff" />
@@ -206,7 +206,7 @@
 		ConfirmDelete="1"
 		BlockBinaryFiles="1"
 		OpenBackupsAsReadOnly="1"
-		DefaultFileFormat="1"
+		DefaultFileFormat="2"
 		DefaultEncoding="65001"
 		FileOpenAction="Project File List"
 		/>
@@ -414,6 +414,7 @@
 			<item Command="Link All Windows" />
 			<item Command="Pick Window..." />
 			<item Command="---Menu Separator---" />
+			<item Command="Pick Window..." />
 		</Menu>
 		<Menu
 			Name="Help"
@@ -1094,7 +1095,7 @@
 			Language="C/C++ Language"
 			ParsePattern=""
 			WordWrap="0"
-			ExpandTabs="0"
+			ExpandTabs="1"
 			EnterKeyIsEOL="1"
 			StatusbarMode="0"
 			AddToProject="1"
@@ -1103,8 +1104,8 @@
 			VisibleTabs="0"
 			VisibleSpaces="0"
 			VisibleEOL="0"
-			ShowLineNumbers="0"
-			ShowRightMargin="0"
+			ShowLineNumbers="1"
+			ShowRightMargin="1"
 			ShowPageBreaks="0"
 			UseSymbolPane="1"
 			UseOverview="1"
@@ -1113,11 +1114,11 @@
 			AllowSnippets="1"
 			ShowRefHighlights="0"
 			TabWidth="4"
-			MarginWidth="120"
+			MarginWidth="80"
 			IndentWidth="4"
 			AutoInsertPairs="1"
 			ParsePatternSymbolType=""
-			AutoIndentMode="2"
+			AutoIndentMode="1"
 			IndentOpenBrace="1"
 			IndentCloseBrace="1"
 			>
@@ -8131,7 +8132,7 @@
 		ShowOverview="0"
 		PercentScale="100"
 		ShowBaseStructure="1"
-		BackColor="#ffffff"
+		BackColor="#cce8cf"
 		>
 		<ListDisplay
 			TextColor="#000000"
@@ -8166,7 +8167,7 @@
 		ShowScrollBar="1"
 		ShowNestingLines="1"
 		PercentScale="100"
-		BackColor="#ffffff"
+		BackColor="#cce8cf"
 		ShowSymbolPane="1"
 		SymbolPaneWidth="180"
 		DiffCmdLine="&quot;%PROGRAM_DIR%\sidiff.exe&quot; -C -b -n"
